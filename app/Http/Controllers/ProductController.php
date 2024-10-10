@@ -22,7 +22,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -63,5 +63,13 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function getProductsByCategory(string $id): \App\Http\Resources\ProductResource
+    {
+     $products = Product::query()->where('category_id',$id)
+         ->with(relations: 'category');
+
+     return new \App\Http\Resources\ProductResource($products->get());
+
     }
 }
