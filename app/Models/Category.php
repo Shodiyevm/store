@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Model
+class Category extends Model
 {
     use HasFactory, Notifiable, HasApiTokens;
+
     protected $fillable = [
         'name',
-        'email',
-        'password',
     ];
+
 }
