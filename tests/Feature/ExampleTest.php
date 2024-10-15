@@ -16,4 +16,9 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+    public function test_FechingAllProducts(): void
+    {
+        $response = $this->get('/api/products');
+        $response->assertStatus(200);
+    }
 }
