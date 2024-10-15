@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -11,9 +13,9 @@ class CategoryController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        return response()->json([
-            Product::all()
-        ]);
+        return response()->json(
+            Category::all()
+        );
     }
 
     /**
