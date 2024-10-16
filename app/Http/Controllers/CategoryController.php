@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use UpdateCategoryRequest ;
 
 class CategoryController extends Controller
 {
@@ -29,10 +30,20 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $category = Category::create([
+            'name'      => $request->name,
+            'parent_id' => $request->parent_id
+        ]);
+
+        return response()->json($category, 201);
     }
+
 
     /**
      * Display the specified resource.
@@ -53,16 +64,30 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $updated = $category->update([
+            'name'      => $request->name,
+            'parent_id' => $request->parent_id
+        ]);
+
+        if ($updated) {
+            return response()->json(['name' => $category->name]);
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category): \Illuminate\Http\JsonResponse
     {
-        //
+        $deleted = $category->delete();
+
+        if ($deleted) {
+            return response()->json([], 204);
+        }
+
+        return response()->json(['message' => 'Resource not deleted'], 500);
     }
 }
